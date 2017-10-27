@@ -8,6 +8,7 @@ addons:
     sources:
     - sourceline: 'ppa:mc3man/trusty-media'
     packages:
+      - libavcodec
       - ffmpeg
       - gstreamer0.10-ffmpeg
 
