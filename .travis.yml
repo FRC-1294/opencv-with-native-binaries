@@ -8,9 +8,10 @@ addons:
     sources:
     - sourceline: 'ppa:mc3man/trusty-media'
     packages:
-      - libavcodec
-      - ffmpeg
-      - gstreamer0.10-ffmpeg
+      - libavcodec-dev
+      - libavformat-dev
+      - libswscale-dev
+      - libv4l-dev
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
