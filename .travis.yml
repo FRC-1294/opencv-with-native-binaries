@@ -9,6 +9,7 @@ addons:
     - sourceline: 'ppa:mc3man/trusty-media'
     packages:
       - ffmpeg
+      - gstreamer0.10-ffmpeg
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -18,8 +19,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 script:
-  - ./gradlew clean build --debug
+  - ./gradlew clean build
+
 before_deploy: "./gradlew generatePomFileForOpenCVPublication generateBintrayFile"
+
 deploy:
   skip_cleanup: true
   provider: bintray
