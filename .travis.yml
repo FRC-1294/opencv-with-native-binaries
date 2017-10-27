@@ -8,6 +8,8 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+script:
+  - ./gradlew clean build --debug
 before_deploy: "./gradlew generatePomFileForOpenCVPublication generateBintrayFile"
 deploy:
   skip_cleanup: true
