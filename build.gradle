@@ -3,6 +3,7 @@ plugins {
   id 'maven-publish'
   id 'org.ajoberstar.grgit' version '2.1.0'
   id 'org.ajoberstar.reckon' version '0.3.0'
+  id "com.jfrog.bintray" version "1.7.3"
 }
 
 group 'org.usfirst.frc.team1294'
@@ -44,22 +45,19 @@ publishing {
   }
 }
 
-model {
-  tasks.generatePomFileForOpenCVPublication {
-    destination = file("$buildDir/opencv-331-${project.version.toString()}.pom")
-  }
-}
+bintray {
+  user = System.getenv('BINTRAY_USER')
+  key = System.getenv('BINTRAY_KEY')
 
-task generateBintrayFile(type: Copy) {
-  def vcs_tag = project.version.toString() // default to version
+  publications = ['OpenCV']
 
-  from(projectDir) {
-    include 'bintray.json'
+  publish = true
+
+  pkg {
+    repo = 'Robot-Code'
+    name = 'opencv-331'
+    userOrg = 'frc-1294'
+    licenses = ['Apache-2.0']
+    vcsUrl = 'https://github.com/FRC-1294/opencv-with-native-binaries.git'
   }
-  expand(
-      version: project.version.toString(),
-      date: new Date().format('yyyy-MM-dd'),
-      vcs_tag: vcs_tag
-  )
-  into 'build'
 }
