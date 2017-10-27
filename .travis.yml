@@ -1,44 +1,38 @@
-
 language: java
 jdk: oraclejdk8
-
-
 addons:
   apt:
     sources:
-    - sourceline: 'ppa:mc3man/trusty-media'
+    - sourceline: ppa:mc3man/trusty-media
     packages:
-      - libavcodec-dev
-      - libavformat-dev
-      - libswscale-dev
-      - libv4l-dev
-
+    - libavcodec-dev
+    - libavformat-dev
+    - libswscale-dev
+    - libv4l-dev
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 script:
-  - ./gradlew clean build
-
+- "./gradlew clean build"
 before_deploy: "./gradlew generatePomFileForOpenCVPublication generateBintrayFile"
-
 deploy:
   skip_cleanup: true
   provider: bintray
   file: build/bintray.json
-  user: timtim17
+  user: johnrudolflewis
   dry-run: false
   on:
     all_branches: true
   key:
-    secure: DVGZB+3Md2bM6jyHl8DR75uINt8jOuX9bzODdnOSQ0WR23sxk+QhizmClRbv928neyZ5EQCWOwiYBESx64+kpAo0NxAUgyreK0S4x7SEDEC68PcuWl1MeQ7fch+gmO4Nqw4AbThS9MNkxM054vvPTiHJo/0nBcf0FLWV+e8z0f9RkA0lCqEGLBphOlIo4ESRnHJPhNf2XMyYvJOlHHgA71LX2nwUmIc5IdokpHfEC3T2yr5Bt15XPcZvwwdBuTblMJV4BOoxjzV7clq4zEEPkl5UVbvJUzrGBq47mVz8mehlTLmOsJVUSWJjsxWvEOi1e2LYBTJH3cFF2dUPvwnnuFezegLYQu5XjM3QJLMHtq5JXOA0qW1PavOUX8LO89z/v1u0KVH8IYcpy+JtP4ByXHf/4HQtlUaeXfcP7SvNz7yOGSmlQhbjtEBAI5F7AwGNJ1wdOj3Z/Z7mcFY3fUbGipUS9SXna9TpM3QDvj2nCMqRmSGbVIuCzJBAD9sobQ4cpmX9NlbsajkT5WtSZl0i5/ljEIsmY5uLPXqsLWTXkPXf4AKs4P1V3j4PEmhieZzul7PymPSSXebpAm+3J8WlTwp/42Y54m871AdNGfAi7V8SnQIcu0LJxCl4Um0M9sd48llEgejFTIqlGgFYB2ho/p2T47g3Oyvi0iG9CXjYLTk=
+    secure: P+MjhdZy0IDdknthfKENXNtqjwaPMQYFAqcnES+o53PZ5Ol11DVQt09QiAMOS4QA5R0QB8DPjLB4VGQWC7BctnedJFAS6aMR2ebCs9ohtqQ0/jP/utryxi3RRNNOn/MBOcCjMT08VmtY1gBlBwI5aZdAAXS+xLiqnd7wRHzv2dzZC9r5+qxxNWv4ynrQrLqJ5eP81rFjS1h9ujYaY5I7eb8jjA/QsnWx1XvWlrks+8Y02wI2Xrc/xUxhHIdh5SZMJ1WwR1VNARQmhPpQK52Nf7KvYmrsMvjcNNeb6/G/tPtuUtYolpQ+hlhONAyfZmFIdanHjuYab9DIG+ozDTzN6SdKtvKfX18kpXHeoOGbERciGdubFUCmZrPeoGl0Qg9e+y06xre5E5bAqjCsSud+12Hqw6OMGtTWc9+sKStrdVaZGdD3/qQwprGuaTV9QTpmL6HUjLWuo7IF3ax1Kawt0MDlWYP9UBdGdVSK/aMN4sfvPIvzEaBuwwPhdVbhRXTWhyzV9w6pNf0bm8jl9lITWQa1TOJtfJNWHYb3Os001nY1ous3UpGohj+XjKSWKMYmPT7rD0cuSg8LGlBaI4dCFtsptECfy51cebEXvPmo6gPJhPC88J8a15A8+pLF1w/1JSs92Sg9wxJgNHMxzqqp3bkTzSRkHGqnEbx69oD/kDo=
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/09f40f14885470ecffd1
+    - https://webhooks.gitter.im/e/09f40f14885470ecffd1
     on_start: never
     on_failure: always
     on_success: change
