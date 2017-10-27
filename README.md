@@ -1,5 +1,7 @@
 # OpenCV 3.3.1 (re-packaged by FRC Team1294)
 
+[![Build Status](https://travis-ci.org/FRC-1294/opencv-with-native-binaries.svg?branch=master)]
+
 OpenCV Java bindings packaged with native libraries.
 
 ## Usage
