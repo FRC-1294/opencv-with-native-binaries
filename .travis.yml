@@ -6,7 +6,7 @@ jdk: oraclejdk8
 addons:
   apt:
     sources:
-      - ppa:mc3man/trusty-media
+    - sourceline: 'ppa:mc3man/trusty-media'
     packages:
       - ffmpeg
 
