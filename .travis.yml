@@ -19,7 +19,7 @@ cache:
 script:
 - "./gradlew clean build"
 after_success:
-- "./gradlew bintrayUpload"
+- "./gradlew bintrayUpload --debug"
 notifications:
   webhooks:
     urls:
