@@ -1,6 +1,21 @@
-sudo: false
+
 language: java
 jdk: oraclejdk8
+
+# GCC needs to be 4.8 or higher so that GOMP_4.0 is installed for opencv
+# This is incredibly hard to track down, find the solution for and fix.
+# https://github.com/bytedeco/javacpp-presets/issues/84
+# http://stackoverflow.com/questions/32361567/java-lang-unsatisfiedlinkerror-travis-ci-using-java-opencv-library
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.8
+      - g++-4.8
+      - oracle-java8-installer
+      - python3
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
