@@ -1,0 +1,65 @@
+plugins {
+  id 'java'
+  id 'maven-publish'
+  id 'org.ajoberstar.grgit' version '2.1.0'
+  id 'org.ajoberstar.reckon' version '0.3.0'
+}
+
+group 'org.usfirst.frc.team1294'
+sourceCompatibility = 1.8
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile files("lib/opencv-331.jar")
+  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+  testCompile group: 'junit', name: 'junit', version: '4.12'
+  testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+}
+
+reckon {
+  normal = scopeFromProp()
+  preRelease = stageFromProp('dev', 'milestone', 'rc', 'final')
+}
+
+task unzipOpenCV(type: Copy) {
+  def zipFile = file('lib/opencv-331.jar')
+  def outputDir = file("${buildDir}/classes/java/main")
+
+  from zipTree(zipFile)
+  into outputDir
+  include 'org/**'
+}
+jar.dependsOn unzipOpenCV
+
+publishing {
+  publications {
+    OpenCV(MavenPublication) {
+      from components.java
+      artifactId 'opencv-331'
+    }
+  }
+}
+
+model {
+  tasks.generatePomFileForOpenCVPublication {
+    destination = file("$buildDir/opencv-331-${project.version.toString()}.pom")
+  }
+}
+
+task generateBintrayFile(type: Copy) {
+  def vcs_tag = project.version.toString() // default to version
+
+  from(projectDir) {
+    include 'bintray.json'
+  }
+  expand(
+      version: project.version.toString(),
+      date: new Date().format('yyyy-MM-dd'),
+      vcs_tag: vcs_tag
+  )
+  into 'build'
+}
